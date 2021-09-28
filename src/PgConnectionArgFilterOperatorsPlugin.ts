@@ -179,6 +179,10 @@ const PgConnectionArgFilterOperatorsPlugin: Plugin = (
         resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
+      unaccentEqualTo: {
+        description: "Equal to the specified value using the UNACCENT function on both terms.",
+        resolve: (i, v) => sql.query`UNACCENT(${i}) = UNACCENT(${v})`,
+      },
       like: {
         description:
           "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
